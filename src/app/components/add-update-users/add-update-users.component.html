@@ -1,0 +1,42 @@
+<mat-card style="width:50%">
+    <mat-card-header>
+        <mat-card-title>
+           {{action}} Users
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+          <p>
+            <button mat-raised-button color="accent" [routerLink]="'/users'">Users</button>
+          </p>
+            <form #userForm="ngForm" [formGroup]="frm" (ngSubmit)="onPost()">
+            <input type="hidden" formControlName="id"/>
+            <p>
+                <mat-form-field class="w-80">
+                   <mat-label>Name</mat-label>
+                   <input matInput formControlName="name" [errorStateMatcher]="errorMatcher">
+                   <mat-error *ngIf="f['name'].errors?.['required']">
+                     Name is required
+                   </mat-error>
+                 </mat-form-field>
+               </p>
+               <p>
+                <mat-form-field class="w-80">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" [errorStateMatcher]="errorMatcher" placeholder="example@domain.com">
+                    <mat-error *ngIf="f['email'].errors?.['required']">
+                      Email is required
+                    </mat-error>
+
+                    <mat-error *ngIf="f['email'].errors?.['email']">
+                        Invalid email id
+                      </mat-error>
+                 
+                </mat-form-field>
+               </p>
+               <p>
+                  <button type="submit" mat-raised-button color="primary" [disabled]="frm.invalid">{{action}}</button>
+               </p>
+          </form>
+    </mat-card-content>
+  
+</mat-card>
