@@ -34,6 +34,24 @@
                 </mat-form-field>
                </p>
                <p>
+                <mat-form-field class="w-80">
+                   <mat-label>Contact</mat-label>
+                   <input matInput formControlName="contact" [errorStateMatcher]="errorMatcher">
+                   <mat-error *ngIf="f['contact'].errors?.['required']">
+                     Contact is required
+                   </mat-error>
+                 </mat-form-field>
+               </p>
+               <p>
+                <mat-form-field class="w-80">
+                   <mat-label>Photo</mat-label>
+                   <input matInput formControlName="url" [errorStateMatcher]="errorMatcher">
+                   <mat-error *ngIf="f['url'].errors?.['required']">
+                     Photo is required
+                   </mat-error>
+                 </mat-form-field>
+               </p>
+               <p>
                   <button type="submit" mat-raised-button color="primary" [disabled]="frm.invalid">{{action}}</button>
                </p>
           </form>

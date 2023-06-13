@@ -20,6 +20,8 @@ export class UserService {
            this.http.get(this.baseUrl+`?_page=${page}&_limit=${limit}`,{observe:'response'})
            .pipe(
             map(response=> {
+              console.log(response.headers)
+              console.log(response.body)
               const count= parseInt(response.headers.get('X-Total-Count')||"0",10);
               const users= response.body as UserModel[]
               return {users,count}

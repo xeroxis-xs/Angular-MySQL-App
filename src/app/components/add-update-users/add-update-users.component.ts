@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { MyErrorStateMatcher } from 'src/app/models/MyErrorStateMatcher';
 import { UserService } from 'src/app/services/user.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-update-users',
@@ -20,16 +21,22 @@ export class AddUpdateUsersComponent implements OnInit {
   }
   errorMatcher= new MyErrorStateMatcher();
 
-  constructor(private fb:FormBuilder,private route:ActivatedRoute,
-    private userService:UserService,private snackBar: MatSnackBar){
-   }
+  constructor(
+    private fb:FormBuilder,
+    private route:ActivatedRoute,
+    private userService:UserService,
+    private snackBar: MatSnackBar,
+    private http: HttpClient
+    ){}
 
   ngOnInit(): void {
     this.getUserById();
     this.frm= this.fb.group({
       id:[0],
       name:['',Validators.required],
-      email:['',[Validators.required,Validators.email]]
+      email:['',[Validators.required,Validators.email]],
+      contact:['',Validators.required],
+      url:['',Validators.required],
     })
   }
 

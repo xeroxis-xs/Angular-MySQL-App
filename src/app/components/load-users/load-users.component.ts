@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserModel } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 
+
 @Component({
   selector: 'app-load-users',
   templateUrl: './load-users.component.html',
@@ -13,7 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 export class LoadUsersComponent implements OnInit {
   
   dataSource=new MatTableDataSource<UserModel>();
-  displayColumns = ['id','name','email','action'];
+  displayColumns = ['id','name','email','contact','url','action'];
   pageSizeOptions=[3,6,9,12];
   pageSize=3;
   pageIndex=0
@@ -24,6 +25,7 @@ export class LoadUsersComponent implements OnInit {
       next:(response)=>{
         this.dataSource.data=response.users;  
         this.pageLength = response.count; 
+        console.log(this.dataSource.data)
   },
       error:(err)=>console.error(err)
     })
