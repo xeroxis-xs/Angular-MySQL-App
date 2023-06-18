@@ -7,34 +7,43 @@ import { UserModel } from '../models/user.model';
   providedIn: 'root'
 })
 export class UserService {
-  baseUrl="/api/users"
-  addUser=(user:UserModel)=>
-  {
-   if(user.id==0)
-       return this.http.post(this.baseUrl,user);
-   else
-       return this.http.put(`${this.baseUrl}/${user.id}`,user);
+  baseUrl = "/api/users"
+  addUser = (data:any) => {
+    
+    if(data.get('id')==0){
+      console.log(data)
+      return this.http.post<any>(this.baseUrl, data);
+    }
+    else{
+      return this.http.put(`${this.baseUrl}/${data.id}`, data);
+    }
   }
 
-  getUsers=(page=1,limit=10)=>
-           this.http.get(this.baseUrl+`?_page=${page}&_limit=${limit}`,{observe:'response'})
-           .pipe(
+  getUsers = (page=1,limit=10) => this.http.get(this.baseUrl+`?page=${page}&limit=${limit}`).pipe(
             map(response=> {
-              console.log(response.headers)
-              console.log(response.body)
-              const count= parseInt(response.headers.get('X-Total-Count')||"0",10);
-              const users= response.body as UserModel[]
-              return {users,count}
+              const data = response as any
+              return data.data
             })
            )
+  
+  getUsersCount = () => this.http.get<any>(this.baseUrl+`/count`).pipe(map(response => {
+    const data = response.data
+    return data
+  }))
 
-   getById= (id:number)=> this.http.get<UserModel>(this.baseUrl+`/${id}`)
- 
-   delete= (id:number)=> this.http.delete<any>(this.baseUrl+`/${id}`)
-          
+  getById = (id:number) => this.http.get<any>(this.baseUrl+`/${id}`).pipe(map(response => {
+    const data = response.result[0]
+    return data
+  }))
 
+  delete = (id:number) => this.http.delete<any>(this.baseUrl+`/${id}`)
 
- 
+  upload = (file:any) => this.http.post(this.baseUrl, file, {
+    reportProgress: true,
+    observe: 'events'
+  })
 
-  constructor(private http:HttpClient) { }
+  constructor(
+    private http:HttpClient
+  ) { }
 }

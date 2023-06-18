@@ -4,7 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http'
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule} from '@angular/material/sidenav';
 import { NavComponent } from './components/nav/nav.component';
@@ -20,6 +20,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -33,9 +34,9 @@ import { MatInputModule } from '@angular/material/input';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule, FormsModule,
     BrowserAnimationsModule,MatToolbarModule,MatSidenavModule,MatIconModule,
-    MatListModule,MatTableModule,MatPaginatorModule,MatButtonModule,MatSnackBarModule,MatCardModule,MatFormFieldModule,MatInputModule
+    MatListModule,MatTableModule,MatPaginatorModule,MatButtonModule,MatSnackBarModule,MatCardModule,MatFormFieldModule,MatInputModule, MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

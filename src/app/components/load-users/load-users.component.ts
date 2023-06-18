@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -23,12 +24,17 @@ export class LoadUsersComponent implements OnInit {
   loadUsers(){
     this.userService.getUsers((this.pageIndex+1),this.pageSize).subscribe({
       next:(response)=>{
-        this.dataSource.data=response.users;  
-        this.pageLength = response.count; 
+        this.dataSource.data = response;  
         console.log(this.dataSource.data)
-  },
+    },
       error:(err)=>console.error(err)
-    })
+    });
+    this.userService.getUsersCount().subscribe({
+      next:(response)=>{
+        this.pageLength = response; 
+    },
+      error:(err)=>console.error(err)
+    });
   }
 
   ngOnInit(): void {
@@ -53,6 +59,9 @@ export class LoadUsersComponent implements OnInit {
          next:(resp)=>{
            if(this.dataSource.data.length===1&&this.pageIndex>0)
                this.pageIndex--;
+            this.snackBar.open("Deleted",'close',{
+              duration:3000
+            })
            this.loadUsers();
          },
          
@@ -61,9 +70,10 @@ export class LoadUsersComponent implements OnInit {
    }
  }
   
-  constructor(private userService:UserService,private router:Router) {
-
-    
-  }
+  constructor(
+    private userService:UserService,
+    private router:Router,
+    private snackBar: MatSnackBar
+  ) { }
 
 }
