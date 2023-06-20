@@ -1,13 +1,17 @@
-<mat-card style="width:50%" >
-    <mat-card-header>
+<p>
+  <button mat-raised-button color="primary" [routerLink]="'/users'">
+    <mat-icon aria-hidden="false" aria-label="back" fontIcon="arrow_back_ios"></mat-icon>
+    Users
+  </button>
+</p>
+
+<mat-card style="width:50%">
+    <mat-card-header style="padding-bottom: 15px;">
         <mat-card-title>
-           {{action}} Users
+           {{action}} User
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-          <p>
-            <button mat-raised-button color="accent" [routerLink]="'/users'">Users</button>
-          </p>
             <form #userForm="ngForm" [formGroup]="frm" (ngSubmit)="onFormSubmit()">
             <input type="hidden" formControlName="id"/>
             <p>
@@ -30,7 +34,7 @@
                     <mat-error *ngIf="f['email'].errors?.['email']">
                         Invalid email id
                       </mat-error>
-                 
+
                 </mat-form-field>
                </p>
                <p>
@@ -42,45 +46,37 @@
                    </mat-error>
                  </mat-form-field>
                </p>
-               <!-- <p>
-                <mat-form-field class="w-80">
-                   <mat-label>Photo</mat-label>
-                   <input matInput formControlName="url" [errorStateMatcher]="errorMatcher">
-                   <mat-error *ngIf="f['url'].errors?.['required']">
-                     Photo is required
-                   </mat-error>
-                 </mat-form-field>
-               </p> -->
+               <ng-container *ngIf=user>
+                <p *ngIf="action=='Update'">
+                  <img class="profileImg" [src]="'assets/uploads/' + user.url" >
+                </p>
+              </ng-container>
 
-               <!-- <mat-form-field class="w-80"> -->
-                <input type="file" class="file-input" [accept]="requiredFileType" (change)="onFileSelected($event)" #fileUpload>
-              <!-- </mat-form-field> -->
-              
+              <input type="file" class="file-input" [accept]="requiredFileType" (change)="onFileSelected($event)" #fileUpload>
                <div class="file-upload">
                 <div class="file-container">
-
                 <p style="padding-right: 10px;">{{fileName || "No file uploaded yet."}}</p>
-              
                   <button mat-mini-fab color="primary" type="button" class="upload-btn" (click)="fileUpload.click()">
                       <mat-icon>attach_file</mat-icon>
                   </button>
                 </div>
-
-                <!-- <div class="progress">
-                  <mat-progress-bar class="progress-bar" mode="determinate" [value]="uploadProgress" *ngIf="uploadProgress">
-                  </mat-progress-bar>
-                  <mat-icon class="cancel-upload" (click)="cancelUpload()" 
-                            *ngIf="uploadProgress">delete_forever</mat-icon>
-                </div> -->
-
               </div>
-               <p>
-                  <button type="submit" mat-raised-button color="primary" [disabled]="frm.invalid">{{action}}</button>
+
+               <p *ngIf="action=='Add'">
+                  <button type="submit" mat-raised-button color="primary" [disabled]="frm.invalid">
+                    <mat-icon aria-hidden="false" aria-label="add" fontIcon="add"></mat-icon>
+                    {{action}}
+                  </button>
                </p>
 
-        
+               <p *ngIf="action=='Update'">
+                <button type="submit" mat-raised-button color="primary" [disabled]="frm.invalid">
+                  <mat-icon aria-hidden="false" aria-label="edit" fontIcon="edit"></mat-icon>
+                  {{action}}
+                </button>
+             </p>
 
           </form>
     </mat-card-content>
-  
+
 </mat-card>

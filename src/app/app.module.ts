@@ -21,6 +21,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ViewUserComponent } from './components/view-user/view-user.component';
+import { ViewTempComponent } from './components/view-temp/view-temp.component';
+import { ViewHumidComponent } from './components/view-humid/view-humid.component';
+import { ViewPsiComponent } from './components/view-psi/view-psi.component';
+import { ViewPm25Component } from './components/view-pm25/view-pm25.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +33,12 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     NavComponent,
     NotfoundComponent,
     LoadUsersComponent,
-    AddUpdateUsersComponent
+    AddUpdateUsersComponent,
+    ViewUserComponent,
+    ViewTempComponent,
+    ViewHumidComponent,
+    ViewPsiComponent,
+    ViewPm25Component,
   ],
   imports: [
     BrowserModule,

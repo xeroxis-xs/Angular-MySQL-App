@@ -6,21 +6,9 @@ const mysql = require("mysql2");
 const server = express();
 const fs = require('fs');
 const axios = require('axios');
+const path = require('path');
 
-
-
-
-// server.use(bodyParser.json());
-// server.use(express.urlencoded({ extended: true }));
-
-// // Enale CORS for all routes
-// server.use(function(req, res, next) {
-//     res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//     next();
-// });
-
+server.use(bodyParser.json());
 
 // Establish the database connection
 const db = mysql.createConnection({
@@ -35,7 +23,7 @@ const db = mysql.createConnection({
 // Storage for Images
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'uploads/'); // Specify the destination folder where uploaded files will be saved
+      cb(null, '../src/assets/uploads/'); // Specify the destination folder where uploaded files will be saved
     },
     filename: (req, file, cb) => {
       cb(null, Date.now() + '-' + file.originalname); // Set the filename for the uploaded file
@@ -57,19 +45,19 @@ db.connect(function (error) {
 
 // Establish the Port for API
 server.listen(8085,function check(error) {
-    if (error) 
+    if (error)
     { console.log("Error starting server at port: 8085");}
-    else 
+    else
     { console.log("Started server at port: 8085");}
 });
 
 // Create User
 server.post("/api/users", upload.single('file'), (req, res) => {
-    
+
     const name = req.body.name;
     const email = req.body.email;
     const contact = req.body.contact;
-    const url = req.file.path;
+    const url = req.file.filename;
 
     const file = req.file;
 
@@ -91,7 +79,7 @@ server.post("/api/users", upload.single('file'), (req, res) => {
     }
   });
 
-  });
+});
 
 // Get All Users
 server.get("/api/users", (req, res) => {
@@ -148,21 +136,52 @@ server.get("/api/users/:id", (req, res) => {
   });
 
 
+// Delete File
+server.delete("/api/users/:filename", (req, res) => {
+  const filename = req.params.filename;
+  const fullPath = path.join(__dirname, '../src/assets/uploads/', filename);
+
+  fs.unlink(fullPath, (err) => {
+    if (err) {
+      console.error(err);
+      res.statusCode = 400;
+      res.send({ message: 'File deletion failed' })
+    } else {
+        res.statusCode = 200;
+        res.send({ message: 'File deleted successfully' })
+    }
+  });
+});
 
 // Update User
-server.put("/api/users/:id", (req, res) => {
-    let sql =
-      "UPDATE user SET name='" +
-      req.body.name +
-      "', email='" +
-      req.body.email +
-      "',contact='" +
-      req.body.contact +
-      "',url='" +
-      req.body.url +
-      "'  WHERE id=" +
-      req.params.id;
-  
+server.put("/api/users/:id", upload.single('file'), (req, res) => {
+  console.log("req.file is " + req.file);
+  let sql = ""
+
+  if (req.file){
+    // if there is a new file
+    console.log("There is file")
+    sql =
+      "UPDATE user SET name='" + req.body.name +
+      "', email ='" + req.body.email +
+      "', contact ='" + req.body.contact +
+      "', url ='" + req.file.filename +
+      "'  WHERE id =" + req.params.id;
+  } else {
+    // if ther is no file to be updated
+    console.log("There is no file")
+    sql =
+      "UPDATE user SET name='" + req.body.name +
+      "', email ='" + req.body.email +
+      "', contact ='" + req.body.contact +
+      "'  WHERE id =" + req.params.id;
+  }
+  console.log("SQL Statement: " + sql);
+
+
+
+
+
     let a = db.query(sql, (error, result) => {
       if (error) {
         res.statusCode = 400;
@@ -198,7 +217,7 @@ setInterval(() => {
 
     // Subtract 3 minutes
     // 3 minutes = 3 * 60 seconds * 1000 milliseconds
-    const threeMinAgo = new Date(currentTime.getTime() - (3 * 60000)); 
+    const threeMinAgo = new Date(currentTime.getTime() - (3 * 60000));
 
     // Convert to SGT
     const options = { timeZone: 'Asia/Singapore' };
@@ -214,10 +233,7 @@ setInterval(() => {
     const formattedDate = `${year}-${month}-${day}T${hour}%3A${minute}%3A00`;
     const displayDate = `${year}-${month}-${day} ${hour}:${minute}`;
 
-    console.log("---------------------")
-    console.log(displayDate + "\n")
-
-    axios.get(`https://api.data.gov.sg/v1/environment/air-temperature?date_time=${formattedDate}`) 
+    axios.get(`https://api.data.gov.sg/v1/environment/air-temperature?date_time=${formattedDate}`)
       .then((response) => {
         const data = response.data;
         const stations = data.metadata.stations;
@@ -227,7 +243,7 @@ setInterval(() => {
         let formData = [];
 
         for (let i = 0; i < stations.length; i++) {
-            const dict = { 
+            const dict = {
                 api_id: String(stations[i].id),
                 device_id: String(stations[i].device_id),
                 name: String(stations[i].name),
@@ -242,16 +258,14 @@ setInterval(() => {
              formData.push(dict);
 
         }
-        console.log(formData)
-  
+        // console.log(formData)
+
         // Store the data in MySQL
-        const query = 'INSERT INTO api_air_temp (api_id, device_id, name, latitude, longitude, server_requested_time, timestamp_in_response, item_station_id, item_value, api_status) VALUES ?'; 
-  
-        // const values = data.map((item) => [item.field1, item.field2, ...]); // Replace field1, field2, ... with the corresponding fields in the API response
-  
+        const query = 'INSERT INTO api_air_temp (api_id, device_id, name, latitude, longitude, server_requested_time, timestamp_in_response, item_station_id, item_value, api_status) VALUES ?';
+
         db.query(query, [formData.map(item => [
-            item.api_id, 
-            item.device_id, 
+            item.api_id,
+            item.device_id,
             item.name,
             item.latitude,
             item.longitude,
@@ -262,13 +276,13 @@ setInterval(() => {
             item.api_status
         ])], (err, result) => {
           if (err) {
-            console.error('Error inserting data into MySQL:', err);
+            console.error('Error inserting data into DB:', err);
           } else {
-            console.log('Data inserted into MySQL');
+            console.log(displayDate + ': Data inserted into DB');
           }
         });
       })
       .catch((error) => {
-        console.error('Error fetching data from the API:', error);
+        console.error(displayDate + ': Error fetching data from the API:', error);
       });
-  }, 10000); // Specify the interval in milliseconds (e.g., 10000 for every 10 seconds)
+  }, 1 * 60000); // Specify the interval in milliseconds (e.g., 10000 for every 10 seconds)

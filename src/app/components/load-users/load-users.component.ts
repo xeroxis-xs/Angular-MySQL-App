@@ -13,25 +13,25 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./load-users.component.scss']
 })
 export class LoadUsersComponent implements OnInit {
-  
+
   dataSource=new MatTableDataSource<UserModel>();
   displayColumns = ['id','name','email','contact','url','action'];
   pageSizeOptions=[3,6,9,12];
   pageSize=3;
   pageIndex=0
   pageLength=0; //total records in db
-  
+
   loadUsers(){
     this.userService.getUsers((this.pageIndex+1),this.pageSize).subscribe({
       next:(response)=>{
-        this.dataSource.data = response;  
+        this.dataSource.data = response;
         console.log(this.dataSource.data)
     },
       error:(err)=>console.error(err)
     });
     this.userService.getUsersCount().subscribe({
       next:(response)=>{
-        this.pageLength = response; 
+        this.pageLength = response;
     },
       error:(err)=>console.error(err)
     });
@@ -52,6 +52,10 @@ export class LoadUsersComponent implements OnInit {
     this.router.navigate(['/users/edit/'+id]);
   }
 
+  onBtnView(id:number):void{
+    this.router.navigate(['/users/view/'+id]);
+  }
+
   onBtnDelete(id:number):void{
     if(window.confirm('are you sure to delete?')){
      {
@@ -64,12 +68,12 @@ export class LoadUsersComponent implements OnInit {
             })
            this.loadUsers();
          },
-         
+
        })
      }
    }
  }
-  
+
   constructor(
     private userService:UserService,
     private router:Router,

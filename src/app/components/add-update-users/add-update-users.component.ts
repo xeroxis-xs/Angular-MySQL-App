@@ -4,11 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { MyErrorStateMatcher } from 'src/app/models/MyErrorStateMatcher';
 import { UserService } from 'src/app/services/user.service';
-import { HttpClient } from '@angular/common/http';
-import { HttpEventType } from '@angular/common/http';
-import { Subscription, finalize } from 'rxjs';
 import { Input } from '@angular/core';
-
 
 
 @Component({
@@ -21,14 +17,14 @@ export class AddUpdateUsersComponent implements OnInit {
   requiredFileType:string = '.jpg, .png, .jpeg';
 
   fileName = '';
-  // uploadProgress:number = 0;
-  // uploadSub: Subscription = new Subscription();
+  id:number;
+  user: any;
 
   frm!:FormGroup;
   action="Add";
   @ViewChild("userForm") usrForm!:NgForm; // it will be used for resetting the form validation messages
-  
-  
+
+
   get f(){
    return this.frm.controls;
   }
@@ -38,30 +34,44 @@ export class AddUpdateUsersComponent implements OnInit {
     private fb:FormBuilder,
     private route:ActivatedRoute,
     private userService:UserService,
-    private snackBar: MatSnackBar,
-    private http: HttpClient
+    private snackBar: MatSnackBar
     ){}
 
   ngOnInit(): void {
-    this.getUserById();
-    this.frm= this.fb.group({
-      id:[0],
-      name:['',Validators.required],
-      email:['',[Validators.required,Validators.email]],
-      contact:['',Validators.required],
-      // file:['',Validators.required],
-      file:['', Validators.required]
-    })
+    this.id = this.route.snapshot.params['id'];
+    this.getUserById(this.id);
+
+    if(this.id) {
+      // Update
+      this.frm= this.fb.group({
+        id:[0],
+        name:['',Validators.required],
+        email:['',[Validators.required,Validators.email]],
+        contact:['',Validators.required],
+        file:['', ]
+      });
+    }
+    else {
+      // Create
+      this.frm= this.fb.group({
+        id:[0],
+        name:['',Validators.required],
+        email:['',[Validators.required,Validators.email]],
+        contact:['',Validators.required],
+        file:['', Validators.required]
+      });
+    }
   }
 
   // fetching the user by id from the database
-  getUserById= ()=>{
-    const id= this.route.snapshot.params['id'];
+  getUserById = (id:number) => {
     if(id){
       this.action="Update";
       this.userService.getById(id).subscribe({
         next:(user) => {
           this.frm.patchValue(user);
+          this.user = user;
+          console.log(this.user)
         },
         error:(err)=>console.log(err)
       })
@@ -69,59 +79,70 @@ export class AddUpdateUsersComponent implements OnInit {
   }
 
   onFormSubmit():void{
-
     const fd = new FormData();
-    fd.append('id', this.frm.value.id)
-    fd.append('name', this.frm.value.name)
-    fd.append('email', this.frm.value.email)
-    fd.append('contact', this.frm.value.contact)
-    fd.append('file', this.frm.value.file)
-    // console.log('fd', fd.get('file'))
+    fd.append('id', this.frm.value.id);
+    fd.append('name', this.frm.value.name);
+    fd.append('email', this.frm.value.email);
+    fd.append('contact', this.frm.value.contact);
+    // actual file
+    fd.append('file', this.frm.value.file);
 
-
-    this.userService.addUser(fd).subscribe({
-      next:(data)=>{
-        this.usrForm.reset();
-        this.usrForm.resetForm();
-        this.snackBar.open("Submitted",'close',{
-          duration:3000
-        });
-        
-      },
-      error:(err)=>{
-        console.log(err);
-        this.snackBar.open("Error",'close',{
-          duration:3000
+    if (this.id) {
+      // Update
+      console.log(this.frm.value.file)
+      if (this.frm.value.file != '') {
+        // New file attached
+        // Delete the old one
+        console.log(this.user.url);
+        this.userService.deleteFile(this.user.url).subscribe({
+          next:(data) => {},
+          error: (err) => {
+            console.log(err);
+          }
         })
       }
-     }
-     )
+      this.userService.updateUser(fd).subscribe({
+        next:(data)=>{
+          this.usrForm.reset();
+          this.usrForm.resetForm();
+          this.snackBar.open("User updated",'close',{
+            duration:3000
+          });
+        },
+        error:(err)=>{
+          console.log(err);
+          this.snackBar.open("Error",'close',{
+            duration:3000
+          })
+        }
+       });
+    }
+    else {
+      // Add
+      this.userService.addUser(fd).subscribe({
+        next:(data)=>{
+          this.usrForm.reset();
+          this.usrForm.resetForm();
+          this.snackBar.open("New user added",'close',{
+            duration:3000
+          });
+        },
+        error:(err)=>{
+          console.log(err);
+          this.snackBar.open("Error",'close',{
+            duration:3000
+          })
+        }
+       })
+    };
   }
 
   onFileSelected(event:any) {
     const fileInput = event.target as HTMLInputElement;
     const file: File | null = fileInput.files?.[0] || null;
-    
     if (file) {
         this.fileName = file.name;
     }
-    //     const formData = new FormData();
-    //     formData.append("file", file);
-
-    //     const upload$ = this.userService.upload(this.frm.value)
-    //     .pipe(
-    //         finalize(() => this.reset())
-    //     );
-      
-    //     this.uploadSub = upload$.subscribe(event => {
-    //       if (event.type == HttpEventType.UploadProgress) {
-    //         const total = event.total ?? 0;
-    //         this.uploadProgress = Math.round(100 * (event.loaded / total));
-    //       }
-    //     })
-    // }
-
-    
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.frm.patchValue({
@@ -130,109 +151,5 @@ export class AddUpdateUsersComponent implements OnInit {
     }
   }
 
-  // cancelUpload() {
-  //   this.uploadSub.unsubscribe();
-  //   this.reset();
-  // }
-
-  // reset() {
-  //   this.uploadProgress = 0;
-  //   this.uploadSub = new Subscription();
-  // }
-
-  // requiredFileType:string = '.jpg, .png, .jpeg';
-  // myForm!: FormGroup;
-  // // myForm = new FormGroup({
-  // //   id: new FormControl([0]),
-  // //   email: new FormControl('', [Validators.required, Validators.email]),
-  // //   name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-  // //   contact: new FormControl('', [Validators.required]),
-  // //   url: new FormControl('', [Validators.required]),
-  // //   file: new FormControl('', [Validators.required])
-  // // });
-
-
-
-  // constructor(
-  //   private fb:FormBuilder,
-  //   private route:ActivatedRoute,
-  //   private userService:UserService,
-  //   private snackBar: MatSnackBar,
-  //   private http: HttpClient
-  // ){}
-
-  // get f(){
-  //   return this.myForm.controls;
-  // }
-
-  // // fileName = '';
-  // uploadProgress:number = 0;
-  // uploadSub: Subscription = new Subscription();
-
-  // // frm!:FormGroup;
-  // action="Add";
-  // // @ViewChild("userForm") usrForm!:NgForm; // it will be used for resetting the form validation messages
-  
-  
-
-
-  // ngOnInit(): void {
-  //   this.getUserById();
-  //   this.myForm = this.fb.group({
-  //     id: [0],
-  //     email: ['', [Validators.required, Validators.email]],
-  //     name: ['', [Validators.required, Validators.minLength(3)]],
-  //     contact: ['', [Validators.required]],
-  //     url: ['', [Validators.required]],
-  //     file: ['', [Validators.required]]
-  //   });
-  
-
-  //   // this.frm= this.fb.group({
-  //   //   id:[0],
-  //   //   name:['',Validators.required],
-  //   //   email:['',[Validators.required,Validators.email]],
-  //   //   contact:['',Validators.required],
-  //   //   url:['',Validators.required],
-  //   // })
-  // }
-
-  // onFileChange(event:any) {
-  //   if (event.target.files.length > 0) {
-  //     const file = event.target.files[0];
-  //     this.myForm.patchValue({
-  //       url: file
-  //     });
-  //   }
-  // }
-
-  // onFormSubmit(){
-  //   const formData = new FormData();
-  //   formData.append('file', this.myForm.get('url')?.value ?? '');
-   
-    
-  //   this.userService.addUser(formData)
-  //     .subscribe(res => {
-  //       console.log(res);
-  //       alert('Uploaded Successfully.');
-  //     })
-  // }
-
-
-  // // fetching the user by id from the database
-  // getUserById= ()=>{
-  //   const id= this.route.snapshot.params['id'];
-  //   if(id){
-  //     this.action="Update";
-  //     this.userService.getById(id).subscribe({
-  //       next:(user) => {
-  //         this.myForm.patchValue(user);
-  //       },
-  //       error:(err)=>console.log(err)
-  //     })
-  //   }
-  // }
-
-
 }
-   
+

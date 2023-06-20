@@ -8,16 +8,16 @@ import { UserModel } from '../models/user.model';
 })
 export class UserService {
   baseUrl = "/api/users"
+
   addUser = (data:any) => {
-    
-    if(data.get('id')==0){
-      console.log(data)
-      return this.http.post<any>(this.baseUrl, data);
-    }
-    else{
-      return this.http.put(`${this.baseUrl}/${data.id}`, data);
-    }
+    return this.http.post<any>(this.baseUrl, data);
   }
+
+  updateUser = (data:any) => {
+    return this.http.put(`${this.baseUrl}/${data.get('id')}`, data);
+  }
+
+  deleteFile = (filename:any) => this.http.delete(`${this.baseUrl}/${filename}`);
 
   getUsers = (page=1,limit=10) => this.http.get(this.baseUrl+`?page=${page}&limit=${limit}`).pipe(
             map(response=> {
@@ -25,7 +25,7 @@ export class UserService {
               return data.data
             })
            )
-  
+
   getUsersCount = () => this.http.get<any>(this.baseUrl+`/count`).pipe(map(response => {
     const data = response.data
     return data
