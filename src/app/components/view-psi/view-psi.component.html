@@ -1,5 +1,5 @@
 <p>
-  <button mat-raised-button color="primary" routerLink="'/psi'">
+  <button mat-raised-button color="primary" routerLink="/psi">
     <mat-icon
       aria-hidden="false"
       aria-label="back"
@@ -30,6 +30,16 @@
 
       <p><strong>PSI (24hr Average):</strong> {{ psi.item_value }}</p>
       <p><strong>API Health:</strong> {{ psi.api_status }}</p>
+      <div class="my-google-map">
+        <google-map
+          [center]="center"
+          [width]="'100%'"
+          [height]="'400'"
+          [options]="options"
+        >
+          <map-marker [position]="marker.position"></map-marker>
+        </google-map>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

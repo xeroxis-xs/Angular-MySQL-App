@@ -10,6 +10,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ViewPm25Component implements OnInit {
   pm25: any;
 
+  options: google.maps.MapOptions = {
+    zoom: 11,
+    zoomControl: false,
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: false,
+  };
+  center = { lat: 1.3521, lng: 103.8198 };
+  marker = {
+    position: { lat: 1.3521, lng: 103.8198 },
+  };
+
   constructor(
     private pm25Service: PM25Service,
     private router: Router,
@@ -25,6 +37,8 @@ export class ViewPm25Component implements OnInit {
     this.pm25Service.getAPM25(id).subscribe({
       next: (response) => {
         this.pm25 = response;
+        this.marker.position.lat = Number(this.pm25.latitude);
+        this.marker.position.lng = Number(this.pm25.longitude);
         console.log(this.pm25);
       },
       error: (err) => console.error(err),

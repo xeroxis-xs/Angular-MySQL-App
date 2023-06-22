@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TempService } from 'src/app/services/temp.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-view-temp',
@@ -8,12 +9,24 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-temp.component.scss'],
 })
 export class ViewTempComponent implements OnInit {
+  options: google.maps.MapOptions = {
+    zoom: 11,
+    zoomControl: false,
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: false,
+  };
+  center = { lat: 1.3521, lng: 103.8198 };
+  marker = {
+    position: { lat: 1.3521, lng: 103.8198 },
+  };
+
   temp: any;
 
   constructor(
     private tempService: TempService,
-    private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private httpClient: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -25,7 +38,8 @@ export class ViewTempComponent implements OnInit {
     this.tempService.getATemp(id).subscribe({
       next: (response) => {
         this.temp = response;
-        console.log(this.temp);
+        this.marker.position.lat = Number(this.temp.latitude);
+        this.marker.position.lng = Number(this.temp.longitude);
       },
       error: (err) => console.error(err),
     });

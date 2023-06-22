@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
@@ -32,6 +32,8 @@ import { ViewTempComponent } from './components/view-temp/view-temp.component';
 import { ViewHumidComponent } from './components/view-humid/view-humid.component';
 import { ViewPm25Component } from './components/view-pm25/view-pm25.component';
 import { ViewPsiComponent } from './components/view-psi/view-psi.component';
+import { RouterModule } from '@angular/router';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -52,8 +54,9 @@ import { ViewPsiComponent } from './components/view-psi/view-psi.component';
     ViewPsiComponent,
   ],
   imports: [
-    BrowserModule,
+    RouterModule,
     AppRoutingModule,
+    BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
@@ -71,8 +74,10 @@ import { ViewPsiComponent } from './components/view-psi/view-psi.component';
     MatInputModule,
     MatProgressBarModule,
     MatSortModule,
+    GoogleMapsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
+  // schemas: [NO_ERRORS_SCHEMA],
 })
 export class AppModule {}

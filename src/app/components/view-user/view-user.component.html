@@ -1,5 +1,5 @@
 <p>
-  <button mat-raised-button color="primary" routerLink="'/users'">
+  <button mat-raised-button color="primary" routerLink="/users">
     <mat-icon
       aria-hidden="false"
       aria-label="back"
@@ -17,9 +17,6 @@
       </mat-card-title-group>
     </mat-card-header>
     <mat-card-content>
-      <!-- <p>
-        <button mat-raised-button color="accent" routerLink="'/users'">Users</button>
-      </p> -->
       <p><strong>Name:</strong> {{ user.name }}</p>
       <p><strong>Contact:</strong> {{ user.contact }}</p>
       <p><strong>Email:</strong> {{ user.name }}</p>
@@ -27,7 +24,7 @@
       <mat-divider></mat-divider>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-button color="primary" routerLink="'/users/edit/user.id'">
+      <button mat-button color="primary" routerLink="/users/edit/user.id">
         <mat-icon
           aria-hidden="false"
           aria-label="back"

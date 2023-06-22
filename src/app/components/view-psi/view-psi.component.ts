@@ -9,7 +9,17 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ViewPsiComponent implements OnInit {
   psi: any;
-
+  options: google.maps.MapOptions = {
+    zoom: 11,
+    zoomControl: false,
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: false,
+  };
+  center = { lat: 1.3521, lng: 103.8198 };
+  marker = {
+    position: { lat: 1.3521, lng: 103.8198 },
+  };
   constructor(
     private psiService: PSIService,
     private router: Router,
@@ -25,6 +35,8 @@ export class ViewPsiComponent implements OnInit {
     this.psiService.getAPSI(id).subscribe({
       next: (response) => {
         this.psi = response;
+        this.marker.position.lat = Number(this.psi.latitude);
+        this.marker.position.lng = Number(this.psi.longitude);
         console.log(this.psi);
       },
       error: (err) => console.error(err),

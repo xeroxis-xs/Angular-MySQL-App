@@ -1,5 +1,5 @@
 <p>
-  <button mat-raised-button color="primary" routerLink="'/temp'">
+  <button mat-raised-button color="primary" routerLink="/temp">
     <mat-icon
       aria-hidden="false"
       aria-label="back"
@@ -33,6 +33,16 @@
       <p><strong>Item Station ID:</strong> {{ temp.item_station_id }}</p>
       <p><strong>Temperature:</strong> {{ temp.item_value }} &#8451;</p>
       <p><strong>API Health:</strong> {{ temp.api_status }}</p>
+      <div class="my-google-map">
+        <google-map
+          [center]="center"
+          [width]="'100%'"
+          [height]="'400'"
+          [options]="options"
+        >
+          <map-marker [position]="marker.position"></map-marker>
+        </google-map>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

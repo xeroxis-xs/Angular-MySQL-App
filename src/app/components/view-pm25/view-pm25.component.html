@@ -1,5 +1,5 @@
 <p>
-  <button mat-raised-button color="primary" routerLink="'/pm25'">
+  <button mat-raised-button color="primary" routerLink="/pm25">
     <mat-icon
       aria-hidden="false"
       aria-label="back"
@@ -30,6 +30,16 @@
 
       <p><strong>PM2.5:</strong> {{ pm25.item_value }} &#xb5;g/m<sup>3</sup></p>
       <p><strong>API Health:</strong> {{ pm25.api_status }}</p>
+      <div class="my-google-map">
+        <google-map
+          [center]="center"
+          [width]="'100%'"
+          [height]="'400'"
+          [options]="options"
+        >
+          <map-marker [position]="marker.position"></map-marker>
+        </google-map>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>
