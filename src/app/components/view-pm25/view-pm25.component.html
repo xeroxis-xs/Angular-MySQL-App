@@ -1,1 +1,35 @@
-<p>view-pm25 works!</p>
+<p>
+  <button mat-raised-button color="primary" [routerLink]="'/pm25'">
+    <mat-icon
+      aria-hidden="false"
+      aria-label="back"
+      fontIcon="arrow_back_ios"
+    ></mat-icon>
+    PM2.5
+  </button>
+</p>
+<div *ngIf="pm25">
+  <mat-card>
+    <mat-card-content>
+      <p><strong>ID:</strong> {{ pm25.id }}</p>
+      <p><strong>Region:</strong> {{ pm25.name }}</p>
+      <p><strong>Latitude:</strong> {{ pm25.latitude }}</p>
+      <p><strong>Longitutude:</strong> {{ pm25.longitude }}</p>
+      <p>
+        <strong>Backend Server API Requested Time:</strong>
+        {{ pm25.server_requested_time }}
+      </p>
+      <p>
+        <strong>Time Shown in API Response:</strong>
+        {{ pm25.timestamp_in_response }}
+      </p>
+      <p>
+        <strong>Update Time Shown in API Response:</strong>
+        {{ pm25.update_timestamp_in_response }}
+      </p>
+
+      <p><strong>PM2.5:</strong> {{ pm25.item_value }} &#xb5;g/m<sup>3</sup></p>
+      <p><strong>API Health:</strong> {{ pm25.api_status }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
