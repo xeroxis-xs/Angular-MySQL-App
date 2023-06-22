@@ -1,1 +1,33 @@
-<p>view-humid works!</p>
+<p>
+  <button mat-raised-button color="primary" [routerLink]="'/temp'">
+    <mat-icon
+      aria-hidden="false"
+      aria-label="back"
+      fontIcon="arrow_back_ios"
+    ></mat-icon>
+    Humidity
+  </button>
+</p>
+<div *ngIf="humid">
+  <mat-card>
+    <mat-card-content>
+      <p><strong>ID:</strong> {{ humid.id }}</p>
+      <p><strong>API ID:</strong> {{ humid.api_id }}</p>
+      <p><strong>Device ID:</strong> {{ humid.device_id }}</p>
+      <p><strong>Area:</strong> {{ humid.name }}</p>
+      <p><strong>Latitude:</strong> {{ humid.latitude }}</p>
+      <p><strong>Longitutude:</strong> {{ humid.longitude }}</p>
+      <p>
+        <strong>Backend Server API Requested Time:</strong>
+        {{ humid.server_requested_time }}
+      </p>
+      <p>
+        <strong>Time Shown in API Response:</strong>
+        {{ humid.timestamp_in_response }}
+      </p>
+      <p><strong>Item Station ID:</strong> {{ humid.item_station_id }}</p>
+      <p><strong>Humidity:</strong> {{ humid.item_value }} %</p>
+      <p><strong>API Health:</strong> {{ humid.api_status }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
