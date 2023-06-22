@@ -40,7 +40,19 @@ export class ViewUserComponent implements OnInit {
 
   onBtnDelete(id:number):void{
     if(window.confirm('Are you sure to delete?')){
-     {
+      {
+ 
+        // Delete that user's file
+        this.userService.deleteFile(this.user.url).subscribe({
+        next:(data) => {
+          console.log("User file deleted!");
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
+ 
+       // Delete that user from DB
        this.userService.delete(id).subscribe({
          next:(resp)=>{
           this.router.navigate(['/users']);
@@ -48,8 +60,12 @@ export class ViewUserComponent implements OnInit {
             duration:3000
           });
          },
-
-        })
+         error: (err) => {
+           console.log(err);
+         }
+ 
+       });
+ 
       }
     }
   }
