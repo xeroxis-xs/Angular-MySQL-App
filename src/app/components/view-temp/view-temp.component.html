@@ -1,1 +1,38 @@
-<p>view-temp works!</p>
+<p>
+  <button mat-raised-button color="primary" [routerLink]="'/temp'">
+    <mat-icon
+      aria-hidden="false"
+      aria-label="back"
+      fontIcon="arrow_back_ios"
+    ></mat-icon>
+    Air Temperature
+  </button>
+</p>
+<div *ngIf="temp">
+  <mat-card>
+    <!-- <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>{{ temp.name }}</mat-card-title>
+      </mat-card-title-group>
+    </mat-card-header> -->
+    <mat-card-content>
+      <p><strong>ID:</strong> {{ temp.id }}</p>
+      <p><strong>API ID:</strong> {{ temp.api_id }}</p>
+      <p><strong>Device ID:</strong> {{ temp.device_id }}</p>
+      <p><strong>Area:</strong> {{ temp.name }}</p>
+      <p><strong>Latitude:</strong> {{ temp.latitude }}</p>
+      <p><strong>Longitutude:</strong> {{ temp.longitude }}</p>
+      <p>
+        <strong>Backend Server API Requested Time:</strong>
+        {{ temp.server_requested_time }}
+      </p>
+      <p>
+        <strong>Time Shown in API Response:</strong>
+        {{ temp.timestamp_in_response }}
+      </p>
+      <p><strong>Item Station ID:</strong> {{ temp.item_station_id }}</p>
+      <p><strong>Temperature:</strong> {{ temp.item_value }} &#8451;</p>
+      <p><strong>API Health:</strong> {{ temp.api_status }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
