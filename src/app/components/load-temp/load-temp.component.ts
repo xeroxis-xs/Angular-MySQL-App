@@ -57,7 +57,11 @@ export class LoadTempComponent implements AfterViewInit {
   }
 
   refreshData(event: Event) {
-    this.loadTemps();
+    this.router
+      .navigateByUrl('/RefreshComponent', { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate(['temp']);
+      });
   }
 
   clickedRows(id: number) {

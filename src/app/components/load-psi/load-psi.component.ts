@@ -17,6 +17,7 @@ export class LoadPsiComponent implements AfterViewInit {
   isHidden: boolean = true;
   pageSizeOptions = [10, 20, 30, 40, 50];
   pageSize = 10;
+  pageIndex = 0;
   temp: PSIModel[];
 
   @ViewChild(MatSort) sort: MatSort;
@@ -51,7 +52,11 @@ export class LoadPsiComponent implements AfterViewInit {
   }
 
   refreshData(event: Event) {
-    this.loadPSI();
+    this.router
+      .navigateByUrl('/RefreshComponent', { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate(['psi']);
+      });
   }
 
   clickedRows(id: number) {

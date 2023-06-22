@@ -53,6 +53,7 @@
           <input
             matInput
             formControlName="contact"
+            type="tel"
             [errorStateMatcher]="errorMatcher"
           />
           <mat-error *ngIf="f['contact'].errors?.['required']">

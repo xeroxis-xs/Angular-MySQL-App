@@ -51,7 +51,11 @@ export class LoadPm25Component implements AfterViewInit {
   }
 
   refreshData(event: Event) {
-    this.loadPM25();
+    this.router
+      .navigateByUrl('/RefreshComponent', { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate(['pm25']);
+      });
   }
 
   clickedRows(id: number) {

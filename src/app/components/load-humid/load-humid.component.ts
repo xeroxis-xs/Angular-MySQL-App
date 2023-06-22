@@ -58,7 +58,11 @@ export class LoadHumidComponent {
   }
 
   refreshData(event: Event) {
-    this.loadHumid();
+    this.router
+      .navigateByUrl('/RefreshComponent', { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate(['humid']);
+      });
   }
 
   clickedRows(id: number) {
