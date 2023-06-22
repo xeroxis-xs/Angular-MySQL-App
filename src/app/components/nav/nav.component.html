@@ -1,15 +1,14 @@
 <p>
   <mat-toolbar color="primary">
-    <button mat-icon-button class="example-icon"
-    aria-label="Example icon-button with menu icon">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>Ng-Material Demo</span>
+    <span>Dashboard App</span>
 
   </mat-toolbar>
 
-   <mat-sidenav-container class="example-container" autosize>
-	<mat-sidenav #sidenav class="example-sidenav" mode="side" opened="true">
+   <mat-drawer-container class="example-container" autosize>
+	<mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
 		<mat-nav-list>
     <a class="sidenav-item" mat-list-item [routerLink]="'/'">
       <mat-icon aria-hidden="false" aria-label="home" fontIcon="home"></mat-icon>
@@ -36,13 +35,13 @@
       <span> PSI</span>
     </a>
 
-    <a class="sidenav-item" mat-list-item [routerLink]="'/particles'">
+    <a class="sidenav-item" mat-list-item [routerLink]="'/pm25'">
       <mat-icon aria-hidden="false" aria-label="air" fontIcon="join_inner"></mat-icon>
       <span> PM2.5</span>
     </a>
 
 		</mat-nav-list>
-	</mat-sidenav>
+	</mat-drawer>
 
 	<div class="example-sidenav-content">
 <div style="width: 100%;">
@@ -52,6 +51,6 @@
 
 	</div>
 
-</mat-sidenav-container>
+</mat-drawer-container>
 
 </p>
