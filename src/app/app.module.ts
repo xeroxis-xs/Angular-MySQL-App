@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { NavComponent } from './components/nav/nav.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -20,12 +20,18 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSortModule } from '@angular/material/sort';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ViewUserComponent } from './components/view-user/view-user.component';
+import { LoadTempComponent } from './components/load-temp/load-temp.component';
+import { LoadHumidComponent } from './components/load-humid/load-humid.component';
+import { LoadPsiComponent } from './components/load-psi/load-psi.component';
+import { LoadPm25Component } from './components/load-pm25/load-pm25.component';
+import { LoadHomeComponent } from './components/load-home/load-home.component';
 import { ViewTempComponent } from './components/view-temp/view-temp.component';
 import { ViewHumidComponent } from './components/view-humid/view-humid.component';
-import { ViewPsiComponent } from './components/view-psi/view-psi.component';
 import { ViewPm25Component } from './components/view-pm25/view-pm25.component';
+import { ViewPsiComponent } from './components/view-psi/view-psi.component';
 
 @NgModule({
   declarations: [
@@ -35,20 +41,38 @@ import { ViewPm25Component } from './components/view-pm25/view-pm25.component';
     LoadUsersComponent,
     AddUpdateUsersComponent,
     ViewUserComponent,
+    LoadTempComponent,
+    LoadHumidComponent,
+    LoadPsiComponent,
+    LoadPm25Component,
+    LoadHomeComponent,
     ViewTempComponent,
     ViewHumidComponent,
-    ViewPsiComponent,
     ViewPm25Component,
+    ViewPsiComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule, FormsModule,
-    BrowserAnimationsModule,MatToolbarModule,MatSidenavModule,MatIconModule,
-    MatListModule,MatTableModule,MatPaginatorModule,MatButtonModule,MatSnackBarModule,MatCardModule,MatFormFieldModule,MatInputModule, MatProgressBarModule
+    ReactiveFormsModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatProgressBarModule,
+    MatSortModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
