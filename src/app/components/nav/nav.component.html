@@ -1,56 +1,79 @@
 <p>
   <mat-toolbar color="primary">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+      (click)="drawer.toggle()"
+    >
       <mat-icon>menu</mat-icon>
     </button>
     <span>Dashboard App</span>
-
   </mat-toolbar>
 
-   <mat-drawer-container class="example-container" autosize>
-	<mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
-		<mat-nav-list>
-    <a class="sidenav-item" mat-list-item [routerLink]="'/'">
-      <mat-icon aria-hidden="false" aria-label="home" fontIcon="home"></mat-icon>
-      <span> Home</span>
-    </a>
+  <mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
+      <mat-nav-list>
+        <a class="sidenav-item" mat-list-item routerLink="'/'">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="home"
+            fontIcon="home"
+          ></mat-icon>
+          <span> Home</span>
+        </a>
 
-    <a class="sidenav-item" mat-list-item [routerLink]="'/users'">
-      <mat-icon aria-hidden="false" aria-label="group" fontIcon="group"></mat-icon>
-      <span> Users</span>
-    </a>
+        <a class="sidenav-item" mat-list-item routerLink="'/users'">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="group"
+            fontIcon="group"
+          ></mat-icon>
+          <span> Users</span>
+        </a>
 
-    <a class="sidenav-item" mat-list-item [routerLink]="'/temp'">
-      <mat-icon aria-hidden="false" aria-label="device_thermostat" fontIcon="device_thermostat"></mat-icon>
-      <span> Temperature</span>
-    </a>
+        <a class="sidenav-item" mat-list-item routerLink="'/temp'">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="device_thermostat"
+            fontIcon="device_thermostat"
+          ></mat-icon>
+          <span> Temperature</span>
+        </a>
 
-    <a class="sidenav-item" mat-list-item [routerLink]="'/humid'">
-      <mat-icon aria-hidden="false" aria-label="water_drop" fontIcon="water_drop"></mat-icon>
-      <span> Humidity</span>
-    </a>
+        <a class="sidenav-item" mat-list-item routerLink="'/humid'">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="water_drop"
+            fontIcon="water_drop"
+          ></mat-icon>
+          <span> Humidity</span>
+        </a>
 
-    <a class="sidenav-item" mat-list-item [routerLink]="'/psi'">
-      <mat-icon aria-hidden="false" aria-label="masks" fontIcon="masks"></mat-icon>
-      <span> PSI</span>
-    </a>
+        <a class="sidenav-item" mat-list-item routerLink="'/psi'">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="masks"
+            fontIcon="masks"
+          ></mat-icon>
+          <span> PSI</span>
+        </a>
 
-    <a class="sidenav-item" mat-list-item [routerLink]="'/pm25'">
-      <mat-icon aria-hidden="false" aria-label="air" fontIcon="join_inner"></mat-icon>
-      <span> PM2.5</span>
-    </a>
+        <a class="sidenav-item" mat-list-item routerLink="'/pm25'">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="air"
+            fontIcon="join_inner"
+          ></mat-icon>
+          <span> PM2.5</span>
+        </a>
+      </mat-nav-list>
+    </mat-drawer>
 
-		</mat-nav-list>
-	</mat-drawer>
-
-	<div class="example-sidenav-content">
-<div style="width: 100%;">
-
-		<router-outlet></router-outlet>
-</div>
-
-	</div>
-
-</mat-drawer-container>
-
+    <div class="example-sidenav-content">
+      <div style="width: 100%">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-drawer-container>
 </p>
