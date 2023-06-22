@@ -1,49 +1,66 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
-import { UserModel } from '../models/user.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-  baseUrl = "/api/users"
+  baseUrl = '/api/users';
+  constructor(private http: HttpClient) {}
 
-  addUser = (data:any) => {
+  addUser = (data: any) => {
     return this.http.post<any>(this.baseUrl, data);
-  }
+  };
 
-  updateUser = (data:any) => {
+  updateUser = (data: any) => {
     return this.http.put(`${this.baseUrl}/${data.get('id')}`, data);
-  }
+  };
 
-  deleteFile = (filename:any) => this.http.delete(`${this.baseUrl}/${filename}`);
+  deleteFile = (filename: any) =>
+    this.http.delete(`${this.baseUrl}/file/${filename}`);
 
-  getUsers = (page=1,limit=10) => this.http.get(this.baseUrl+`?page=${page}&limit=${limit}`).pipe(
-            map(response=> {
-              const data = response as any
-              return data.data
-            })
-           )
+  getUsers = (page = 1, limit = 10) =>
+    this.http.get(this.baseUrl + `?page=${page}&limit=${limit}`).pipe(
+      map((response) => {
+        const data = response as any;
+        // console.log(data);
+        return data.result;
+      })
+    );
 
-  getUsersCount = () => this.http.get<any>(this.baseUrl+`/count`).pipe(map(response => {
-    const data = response.data
-    return data
-  }))
+  getAllUsers = () =>
+    this.http.get(this.baseUrl).pipe(
+      map((response) => {
+        const data = response as any;
+        // console.log(data);
+        return data.result;
+      })
+    );
 
-  getById = (id:number) => this.http.get<any>(this.baseUrl+`/${id}`).pipe(map(response => {
-    const data = response.result[0]
-    return data
-  }))
+  getUsersCount = () =>
+    this.http.get<any>(this.baseUrl + `/count`).pipe(
+      map((response) => {
+        // console.log(response);
+        const data = response.data;
+        // console.log(data);
+        return data;
+      })
+    );
 
-  delete = (id:number) => this.http.delete<any>(this.baseUrl+`/${id}`)
+  getById = (id: number) =>
+    this.http.get<any>(this.baseUrl + `/${id}`).pipe(
+      map((response) => {
+        const data = response.result[0];
+        return data;
+      })
+    );
 
-  upload = (file:any) => this.http.post(this.baseUrl, file, {
-    reportProgress: true,
-    observe: 'events'
-  })
+  delete = (id: number) => this.http.delete<any>(this.baseUrl + `/${id}`);
 
-  constructor(
-    private http:HttpClient
-  ) { }
+  upload = (file: any) =>
+    this.http.post(this.baseUrl, file, {
+      reportProgress: true,
+      observe: 'events',
+    });
 }
