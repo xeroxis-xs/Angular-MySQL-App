@@ -1,82 +1,143 @@
 <p>
   <button mat-raised-button color="primary" [routerLink]="'/users'">
-    <mat-icon aria-hidden="false" aria-label="back" fontIcon="arrow_back_ios"></mat-icon>
+    <mat-icon
+      aria-hidden="false"
+      aria-label="back"
+      fontIcon="arrow_back_ios"
+    ></mat-icon>
     Users
   </button>
 </p>
 
-<mat-card style="width:50%">
-    <mat-card-header style="padding-bottom: 15px;">
-        <mat-card-title>
-           {{action}} User
-        </mat-card-title>
-    </mat-card-header>
+<mat-card style="width: 50%">
+  <mat-card-header style="padding-bottom: 15px">
+    <mat-card-title> {{ action }} User </mat-card-title>
+  </mat-card-header>
+  <form #userForm="ngForm" [formGroup]="frm" (ngSubmit)="onFormSubmit()">
     <mat-card-content>
-            <form #userForm="ngForm" [formGroup]="frm" (ngSubmit)="onFormSubmit()">
-            <input type="hidden" formControlName="id"/>
-            <p>
-                <mat-form-field class="w-80">
-                   <mat-label>Name</mat-label>
-                   <input matInput formControlName="name" [errorStateMatcher]="errorMatcher">
-                   <mat-error *ngIf="f['name'].errors?.['required']">
-                     Name is required
-                   </mat-error>
-                 </mat-form-field>
-               </p>
-               <p>
-                <mat-form-field class="w-80">
-                    <mat-label>Email</mat-label>
-                    <input matInput formControlName="email" [errorStateMatcher]="errorMatcher" placeholder="example@domain.com">
-                    <mat-error *ngIf="f['email'].errors?.['required']">
-                      Email is required
-                    </mat-error>
+      <input type="hidden" formControlName="id" />
+      <p>
+        <mat-form-field class="w-80">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            formControlName="name"
+            [errorStateMatcher]="errorMatcher"
+          />
+          <mat-error *ngIf="f['name'].errors?.['required']">
+            Name is required
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field class="w-80">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            [errorStateMatcher]="errorMatcher"
+            placeholder="example@domain.com"
+          />
+          <mat-error *ngIf="f['email'].errors?.['required']">
+            Email is required
+          </mat-error>
 
-                    <mat-error *ngIf="f['email'].errors?.['email']">
-                        Invalid email id
-                      </mat-error>
+          <mat-error *ngIf="f['email'].errors?.['email']">
+            Invalid email id
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field class="w-80">
+          <mat-label>Contact</mat-label>
+          <input
+            matInput
+            formControlName="contact"
+            [errorStateMatcher]="errorMatcher"
+          />
+          <mat-error *ngIf="f['contact'].errors?.['required']">
+            Contact is required
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <ng-container *ngIf="user && ImgVisible">
+        <p *ngIf="action == 'Update'">
+          <img class="profileImg" [src]="'assets/uploads/' + user.url" />
+        </p>
+      </ng-container>
 
-                </mat-form-field>
-               </p>
-               <p>
-                <mat-form-field class="w-80">
-                   <mat-label>Contact</mat-label>
-                   <input matInput formControlName="contact" [errorStateMatcher]="errorMatcher">
-                   <mat-error *ngIf="f['contact'].errors?.['required']">
-                     Contact is required
-                   </mat-error>
-                 </mat-form-field>
-               </p>
-               <ng-container *ngIf=user>
-                <p *ngIf="action=='Update'">
-                  <img class="profileImg" [src]="'assets/uploads/' + user.url" >
-                </p>
-              </ng-container>
-
-              <input type="file" class="file-input" [accept]="requiredFileType" (change)="onFileSelected($event)" #fileUpload>
-               <div class="file-upload">
-                <div class="file-container">
-                <p style="padding-right: 10px;">{{fileName || "No file uploaded yet."}}</p>
-                  <button mat-mini-fab color="primary" type="button" class="upload-btn" (click)="fileUpload.click()">
-                      <mat-icon>attach_file</mat-icon>
-                  </button>
-                </div>
-              </div>
-
-               <p *ngIf="action=='Add'">
-                  <button type="submit" mat-raised-button color="primary" [disabled]="frm.invalid">
-                    <mat-icon aria-hidden="false" aria-label="add" fontIcon="add"></mat-icon>
-                    {{action}}
-                  </button>
-               </p>
-
-               <p *ngIf="action=='Update'">
-                <button type="submit" mat-raised-button color="primary" [disabled]="frm.invalid">
-                  <mat-icon aria-hidden="false" aria-label="edit" fontIcon="edit"></mat-icon>
-                  {{action}}
-                </button>
-             </p>
-
-          </form>
+      <input
+        type="file"
+        class="file-input"
+        [accept]="requiredFileType"
+        (change)="onFileSelected($event)"
+        #fileUpload
+      />
+      <div class="file-upload">
+        <div class="file-container">
+          <p style="padding-right: 10px">
+            {{ fileName || "No file uploaded yet." }}
+          </p>
+          <button
+            mat-mini-fab
+            color="primary"
+            type="button"
+            class="upload-btn"
+            (click)="fileUpload.click()"
+          >
+            <mat-icon>attach_file</mat-icon>
+          </button>
+        </div>
+      </div>
     </mat-card-content>
+    <mat-card-actions *ngIf="action == 'Add'" align="end">
+      <button
+        type="submit"
+        mat-button
+        color="primary"
+        [disabled]="frm.invalid"
+        style="padding-right: 20px"
+      >
+        <mat-icon
+          aria-hidden="false"
+          aria-label="add"
+          fontIcon="add"
+        ></mat-icon>
+        {{ action }}
+      </button>
+      <button mat-button color="warn" [routerLink]="'/users'">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="cancel"
+          fontIcon="cancel"
+        ></mat-icon>
+        Cancel
+      </button>
+    </mat-card-actions>
 
+    <mat-card-actions *ngIf="action == 'Update'" align="end">
+      <button
+        type="submit"
+        mat-button
+        color="primary"
+        [disabled]="frm.invalid"
+        style="padding-right: 20px"
+      >
+        <mat-icon
+          aria-hidden="false"
+          aria-label="edit"
+          fontIcon="edit"
+        ></mat-icon>
+        {{ action }}
+      </button>
+      <button mat-button color="warn" [routerLink]="'/users'">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="cancel"
+          fontIcon="cancel"
+        ></mat-icon>
+        Cancel
+      </button>
+    </mat-card-actions>
+  </form>
 </mat-card>

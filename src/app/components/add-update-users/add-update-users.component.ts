@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, NgForm, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
@@ -17,13 +17,14 @@ export class AddUpdateUsersComponent implements OnInit {
   requiredFileType:string = '.jpg, .png, .jpeg';
 
   fileName = '';
+  ImgVisible = true;
   id:number;
   user: any;
 
   frm!:FormGroup;
   action="Add";
   @ViewChild("userForm") usrForm!:NgForm; // it will be used for resetting the form validation messages
-
+  @ViewChild("fileUpload") myInputVar: ElementRef; // used for resetting the file attached
 
   get f(){
    return this.frm.controls;
@@ -95,7 +96,9 @@ export class AddUpdateUsersComponent implements OnInit {
         // Delete the old one
         console.log(this.user.url);
         this.userService.deleteFile(this.user.url).subscribe({
-          next:(data) => {},
+          next:(data) => {
+            console.log("Old file deleted!")
+          },
           error: (err) => {
             console.log(err);
           }
@@ -105,6 +108,9 @@ export class AddUpdateUsersComponent implements OnInit {
         next:(data)=>{
           this.usrForm.reset();
           this.usrForm.resetForm();
+          this.myInputVar.nativeElement.value = "";
+          this.ImgVisible = false;
+          this.fileName = "";
           this.snackBar.open("User updated",'close',{
             duration:3000
           });
@@ -123,6 +129,9 @@ export class AddUpdateUsersComponent implements OnInit {
         next:(data)=>{
           this.usrForm.reset();
           this.usrForm.resetForm();
+          this.myInputVar.nativeElement.value = "";
+          this.ImgVisible = false;
+          this.fileName = "";
           this.snackBar.open("New user added",'close',{
             duration:3000
           });
@@ -135,7 +144,8 @@ export class AddUpdateUsersComponent implements OnInit {
         }
        })
     };
-  }
+    
+  };
 
   onFileSelected(event:any) {
     const fileInput = event.target as HTMLInputElement;
@@ -149,7 +159,7 @@ export class AddUpdateUsersComponent implements OnInit {
         file: file
       });
     }
-  }
+  };
 
 }
 
