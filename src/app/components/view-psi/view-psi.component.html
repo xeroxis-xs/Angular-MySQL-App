@@ -1,1 +1,35 @@
-<p>view-psi works!</p>
+<p>
+  <button mat-raised-button color="primary" [routerLink]="'/psi'">
+    <mat-icon
+      aria-hidden="false"
+      aria-label="back"
+      fontIcon="arrow_back_ios"
+    ></mat-icon>
+    PSI
+  </button>
+</p>
+<div *ngIf="psi">
+  <mat-card>
+    <mat-card-content>
+      <p><strong>ID:</strong> {{ psi.id }}</p>
+      <p><strong>Region:</strong> {{ psi.name }}</p>
+      <p><strong>Latitude:</strong> {{ psi.latitude }}</p>
+      <p><strong>Longitutude:</strong> {{ psi.longitude }}</p>
+      <p>
+        <strong>Backend Server API Requested Time:</strong>
+        {{ psi.server_requested_time }}
+      </p>
+      <p>
+        <strong>Time Shown in API Response:</strong>
+        {{ psi.timestamp_in_response }}
+      </p>
+      <p>
+        <strong>Update Time Shown in API Response:</strong>
+        {{ psi.update_timestamp_in_response }}
+      </p>
+
+      <p><strong>PSI (24hr Average):</strong> {{ psi.item_value }}</p>
+      <p><strong>API Health:</strong> {{ psi.api_status }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
