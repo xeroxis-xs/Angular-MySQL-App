@@ -24,7 +24,11 @@
       <mat-divider></mat-divider>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-button color="primary" routerLink="/users/edit/user.id">
+      <button
+        mat-button
+        color="primary"
+        [routerLink]="['/users/edit/', user.id]"
+      >
         <mat-icon
           aria-hidden="false"
           aria-label="back"
