@@ -1,5 +1,5 @@
 .example-spacer {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 .example-container {
@@ -10,17 +10,55 @@
   right: 0;
 }
 
-
 .example-sidenav-content {
   display: flex;
   height: 88%;
   padding: 2rem;
 }
 
-.sidenav-item{
+.sidenav-item {
   flex-direction: row;
 }
-   
+
 .sidenav-item .mat-icon {
-   vertical-align: middle; 
+  vertical-align: middle;
 }
+
+.mat-expansion-panel-header {
+  padding-left: 16px !important;
+  font-family: Roboto !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  flex-direction: row;
+}
+
+.expansion-item {
+  background-color: rgba(0, 0, 0, 0.03);
+  padding-left: 24px;
+}
+
+.mat-expansion-panel-header .mat-icon {
+  vertical-align: middle;
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+:host ::ng-deep .mat-expansion-indicator {
+  padding: 0px !important;
+  // margin: 10px !important;
+  // padding-right: 0px !important;
+}
+
+// :host ::ng-deep .mat-content {
+//   &:hover {
+//     background-color: white;
+//   }
+// }
+
+// :host ::ng-deep .mat-content .a {
+//   &:hover {
+//     background-color: white;
+//   }
+// }

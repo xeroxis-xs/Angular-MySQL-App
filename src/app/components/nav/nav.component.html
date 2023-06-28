@@ -23,6 +23,41 @@
           <span> Home</span>
         </a>
 
+        <mat-expansion-panel
+          [class.mat-elevation-z0]="true"
+          *ngFor="let building of buildings"
+        >
+          <mat-expansion-panel-header>
+            <a class="sidenav-item" style="padding-right: 20px">
+              <mat-icon
+                aria-hidden="false"
+                aria-label="apartment"
+                fontIcon="apartment"
+              ></mat-icon
+              ><span> {{ building.name }} </span>
+            </a>
+          </mat-expansion-panel-header>
+
+          <mat-nav-list>
+            <div *ngFor="let level of levels">
+              <div *ngIf="building.id === level.building_id">
+                <a
+                  mat-list-item
+                  class="sidenav-item expansion-item"
+                  [routerLink]="['/level/', level.id]"
+                >
+                  <mat-icon
+                    aria-hidden="false"
+                    aria-label="location_on"
+                    fontIcon="location_on"
+                  ></mat-icon
+                  ><span> {{ level.name }} </span>
+                </a>
+              </div>
+            </div>
+          </mat-nav-list>
+        </mat-expansion-panel>
+
         <a class="sidenav-item" mat-list-item routerLink="/users">
           <mat-icon
             aria-hidden="false"
