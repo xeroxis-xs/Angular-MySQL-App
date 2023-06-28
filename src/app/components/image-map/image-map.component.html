@@ -1,0 +1,29 @@
+<div id="image-container" (contextmenu)="onAreaCreate(0, 0)">
+  <!-- <img [src]="src" height="600px" width='600px'> -->
+
+  <img [src]="src" class="image-styling" />
+  <mat-icon
+    class="marker-icon"
+    aria-hidden="false"
+    aria-label="location_on"
+    fontIcon="location_on"
+    *ngFor="let coordinate of coordinates"
+    [style.left.px]="coordinate.x + coordinate.width / 2.6"
+    [style.top.px]="coordinate.y + coordinate.height / 8"
+    [ngStyle]="{
+      color: coordinate.status === 'danger' ? '#E15759' : '#59A14F'
+    }"
+  ></mat-icon>
+
+  <div class="coordinates-container">
+    <div
+      class="area"
+      [ngStyle]="getCoordinateStyle(coordinate)"
+      [title]="coordinate.name"
+      *ngFor="let coordinate of coordinates"
+      (click)="onAreaClick(coordinate); selectArea(coordinate.id)"
+      (contextmenu)="onAreaEdit(coordinate)"
+      [class.selected]="selectedArea === coordinate.id"
+    ></div>
+  </div>
+</div>

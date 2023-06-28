@@ -1,0 +1,37 @@
+.coordinates-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  .area {
+    position: absolute;
+    cursor: pointer;
+    transition: all 0.1s;
+    &:hover {
+      border: 2px solid #ff4081;
+      box-shadow: 0 0px 10px #ff4081;
+    }
+  }
+
+  .area.selected {
+    border: 2px solid #ff4081;
+    box-shadow: 0 0px 10px #ff4081;
+  }
+}
+
+#image-container {
+  position: relative;
+}
+
+.image-styling {
+  max-width: 800px;
+}
+
+.marker-icon {
+  position: absolute;
+  font-size: 35px;
+  height: 35px;
+  width: 35px;
+}

@@ -1,0 +1,43 @@
+<div *ngIf="level">
+  <mat-card class="example-card">
+    <mat-card-header style="padding-bottom: 10px">
+      <mat-card-title
+        >{{ level.building_name }} - {{ level.level_name }}</mat-card-title
+      >
+      <mat-card-subtitle
+        >Building ID: {{ level.building_id }}</mat-card-subtitle
+      >
+      <mat-card-subtitle>Level ID: {{ level.id }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="example-card-content">
+      <div *ngIf="coords">
+        <image-map
+          [src]="'assets/building_level_images/' + level.url"
+          [coordinates]="coords"
+          (onClick)="getClick($event)"
+          [canEdit]="true"
+        ></image-map>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <br />
+
+  <div *ngIf="selectedCoord">
+    <mat-card class="example-card">
+      <mat-card-header style="padding-bottom: 10px">
+        <mat-card-title>{{ selectedCoord.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="example-card-content">
+        <p><strong>Description: </strong>{{ selectedCoord.details }}</p>
+        <p><strong>ID: </strong>{{ selectedCoord.id }}</p>
+        <p><strong>Level ID: </strong>{{ selectedCoord.level_id }}</p>
+        <p><strong>X Coordinate: </strong>{{ selectedCoord.x }}</p>
+        <p><strong>Y Coordinate: </strong>{{ selectedCoord.y }}</p>
+        <p><strong>Height: </strong>{{ selectedCoord.height }}px</p>
+        <p><strong>Width: </strong>{{ selectedCoord.width }}px</p>
+        <p><strong>Status: </strong>{{ selectedCoord.status }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -21,6 +21,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ViewUserComponent } from './components/view-user/view-user.component';
 import { LoadTempComponent } from './components/load-temp/load-temp.component';
@@ -34,6 +36,8 @@ import { ViewPm25Component } from './components/view-pm25/view-pm25.component';
 import { ViewPsiComponent } from './components/view-psi/view-psi.component';
 import { RouterModule } from '@angular/router';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { ImageMapComponent } from './components/image-map/image-map.component';
+import { ViewLevelComponent } from './components/view-level/view-level.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +56,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     ViewHumidComponent,
     ViewPm25Component,
     ViewPsiComponent,
+    ImageMapComponent,
+    ViewLevelComponent,
   ],
   imports: [
     RouterModule,
@@ -75,6 +81,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     MatProgressBarModule,
     MatSortModule,
     GoogleMapsModule,
+    MatTabsModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

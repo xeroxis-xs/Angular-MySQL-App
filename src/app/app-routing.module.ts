@@ -13,6 +13,7 @@ import { ViewTempComponent } from './components/view-temp/view-temp.component';
 import { ViewHumidComponent } from './components/view-humid/view-humid.component';
 import { ViewPm25Component } from './components/view-pm25/view-pm25.component';
 import { ViewPsiComponent } from './components/view-psi/view-psi.component';
+import { ViewLevelComponent } from './components/view-level/view-level.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -34,6 +35,8 @@ const routes: Routes = [
 
   { path: 'pm25', component: LoadPm25Component },
   { path: 'pm25/view/:id', component: ViewPm25Component },
+
+  { path: 'level/:id', component: ViewLevelComponent },
 
   { path: '**', component: NotfoundComponent },
 ];
