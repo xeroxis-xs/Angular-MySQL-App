@@ -9,6 +9,9 @@ const tempRoutes = require("./services/temp");
 const humidRoutes = require("./services/humid");
 const pm25Routes = require("./services/pm25");
 const psiRoutes = require("./services/psi");
+const levelRoutes = require("./services/level");
+const coordRoutes = require("./services/coord");
+const buildingRoutes = require("./services/building");
 
 // Use service routes
 server.use(bodyParser.json());
@@ -17,6 +20,9 @@ server.use("/api/temp", tempRoutes);
 server.use("/api/humid", humidRoutes);
 server.use("/api/pm25", pm25Routes);
 server.use("/api/psi", psiRoutes);
+server.use("/api/level", levelRoutes);
+server.use("/api/coord", coordRoutes);
+server.use("/api/building", buildingRoutes);
 
 // Establish the server
 server.listen(8085, function check(error) {
