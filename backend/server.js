@@ -4,7 +4,6 @@ const server = express();
 
 // Import service files
 const userRoutes = require("./services/user");
-const apiPullRoutes = require("./services/api_pull");
 const tempRoutes = require("./services/temp");
 const humidRoutes = require("./services/humid");
 const pm25Routes = require("./services/pm25");
@@ -12,6 +11,12 @@ const psiRoutes = require("./services/psi");
 const levelRoutes = require("./services/level");
 const coordRoutes = require("./services/coord");
 const buildingRoutes = require("./services/building");
+
+// Interval API
+const apiPullTemp = require("./services/api_pull_temp");
+const apiPullHumid = require("./services/api_pull_humid");
+const apiPullPsi = require("./services/api_pull_psi");
+const apiPullPm25 = require("./services/api_pull_pm25");
 
 // Use service routes
 server.use(bodyParser.json());
