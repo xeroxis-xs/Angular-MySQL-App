@@ -22,10 +22,6 @@ This will serve the backend server using Express.js. The server will connect to 
 
 Make sure that your MySQL Database is set up according to the variables configured in `backend/db.js` and tables are set up according to `backend/createTable.sql`.
 
-## Usage
-
-Once the backend server is running, you can access the application by opening the frontend in a web browser with http://localhost:4200.
-
 ## Frontend Server
 
 To start the backend server, run the following command:
@@ -35,6 +31,12 @@ ng serve
 ```
 
 The frontend of this application is built using Angular Material, a UI component library for Angular. It provides a set of pre-built and customizable UI components that follow the Material Design guidelines.
+
+
+## Usage
+
+Once the backend server is running, you can access the application by opening the frontend in a web browser with http://localhost:4200.
+
 
 ## Acknowledgments
 
