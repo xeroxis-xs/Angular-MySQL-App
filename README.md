@@ -24,7 +24,7 @@ Make sure that your MySQL Database is set up according to the variables configur
 
 ## Frontend Server
 
-To start the backend server, run the following command:
+To start the frontend server, run the following command:
 
 ```bash
 ng serve
@@ -32,11 +32,9 @@ ng serve
 
 The frontend of this application is built using Angular Material, a UI component library for Angular. It provides a set of pre-built and customizable UI components that follow the Material Design guidelines.
 
-
 ## Usage
 
 Once the backend server is running, you can access the application by opening the frontend in a web browser with http://localhost:4200.
-
 
 ## Acknowledgments
 
