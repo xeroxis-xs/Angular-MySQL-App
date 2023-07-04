@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 const db = require("../db");
-const env = require("dotenv").config();
-const interval = process.env.HUMID_INTERVAL;
+
+const interval = process.env.HUMID_INTERVAL || 1;
 
 // Make periodic API requests and store data in MySQL
 setInterval(() => {

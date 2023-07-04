@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const server = express();
+const port = process.env.PORT || 8085;
+const host = process.env.HOST || "localhost";
 
 // Import service files
 const userRoutes = require("./services/user");
@@ -30,10 +32,22 @@ server.use("/api/coord", coordRoutes);
 server.use("/api/building", buildingRoutes);
 
 // Establish the server
-server.listen(8085, function check(error) {
+server.listen(port, function check(error) {
   if (error) {
-    console.log("Error starting server at port: 8085");
+    console.log("Server: Error starting server at port: " + port);
   } else {
-    console.log("Started server at port: 8085");
+    console.log("Server: Started server at port " + port);
   }
+});
+
+server.get("/api", (req, res) => {
+  res.send("API Home");
+});
+
+server.get("/api/db", (req, res) => {
+  res.send("DB HOST: " + host);
+});
+
+server.get("/", (req, res) => {
+  res.send("Index");
 });
